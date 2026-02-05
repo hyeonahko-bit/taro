@@ -90,6 +90,8 @@ const resultMain = document.getElementById("resultMain");
 const resultSub = document.getElementById("resultSub");
 const resultTags = document.getElementById("resultTags");
 const retryBtn = document.getElementById("retryBtn");
+const app = document.querySelector(".app");
+const resultCard = document.querySelector(".result-card");
 
 let currentIndex = 0;
 let totalScore = 0;
@@ -151,9 +153,23 @@ function renderResult() {
   resultMain.textContent = resultData.main;
   resultSub.textContent =
     resultData.main === "정당화 성공(희귀)" ? resultData.sub : penalty;
+  const isFail = resultData.main.includes("실패");
   resultTags.innerHTML = resultData.tags
     .map((tag) => `<span class="tag">#${tag}</span>`)
     .join("");
+  if (isFail) {
+    resultCard?.classList.remove("is-fail");
+    void resultCard?.offsetWidth;
+    resultCard?.classList.add("is-fail");
+    resultCard?.classList.remove("is-success");
+    app?.classList.remove("is-storm");
+    void app?.offsetWidth;
+    app?.classList.add("is-storm");
+  } else {
+    resultCard?.classList.remove("is-fail");
+    resultCard?.classList.add("is-success");
+    app?.classList.remove("is-storm");
+  }
 }
 
 function handleChoice(score) {
