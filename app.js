@@ -201,10 +201,14 @@ const TAROT_CARDS = [
 ];
 
 const cardGrid = document.getElementById("cardGrid");
+const resultModal = document.getElementById("resultModal");
 const resultValue = document.getElementById("resultValue");
 const resultNote = document.getElementById("resultNote");
 const resultCard = document.getElementById("resultCard");
 const resetBtn = document.getElementById("resetBtn");
+const closeBtn = document.getElementById("closeBtn");
+const resetBar = document.getElementById("resetBar");
+const resetFloatingBtn = document.getElementById("resetFloatingBtn");
 
 let selectedIndex = null;
 let deck = [];
@@ -276,15 +280,36 @@ function handleSelect(index) {
   resultValue.textContent = answer;
   resultNote.textContent = "상징과 느낌을 함께 읽어보세요.";
   resultCard.innerHTML = cardFrontTemplate(deck[index]);
+  resetBar.classList.add("is-visible");
+  openModal();
 }
 
 function reset() {
   resultValue.textContent = "-";
   resultNote.textContent = "카드를 선택하면 결과가 보여요.";
   resultCard.innerHTML = '<div class="result-empty">선택된 카드가 없어요</div>';
+  resetBar.classList.remove("is-visible");
   buildCards();
+  closeModal();
 }
 
 resetBtn.addEventListener("click", reset);
+resetFloatingBtn.addEventListener("click", reset);
+closeBtn.addEventListener("click", closeModal);
+resultModal.addEventListener("click", (event) => {
+  if (event.target && event.target.matches("[data-close]")) {
+    closeModal();
+  }
+});
+
+function openModal() {
+  resultModal.classList.add("is-open");
+  resultModal.setAttribute("aria-hidden", "false");
+}
+
+function closeModal() {
+  resultModal.classList.remove("is-open");
+  resultModal.setAttribute("aria-hidden", "true");
+}
 
 buildCards();

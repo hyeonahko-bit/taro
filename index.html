@@ -11,7 +11,7 @@
       <header class="top">
         <div class="badge">TARO</div>
         <h1>오늘의 질문에 답을 드릴게요</h1>
-        <p class="sub">메이저 22장 중 1장을 선택하면 Yes/No로 알려드려요.</p>
+        <p class="sub">고민을 깊이 생각하고 메이저 22장 중 1장을 선택하세요. 고민에 대한 답을 Yes/No로 알려드려요.</p>
       </header>
 
       <section class="guide">
@@ -36,17 +36,30 @@
         <div class="card-grid" id="cardGrid" aria-live="polite"></div>
       </section>
 
-      <section class="result" id="resultBox" aria-live="polite">
-        <div class="result-answer">
-          <div class="result-label">답변</div>
-          <div class="result-value" id="resultValue">-</div>
-          <div class="result-note" id="resultNote">카드를 선택하면 결과가 보여요.</div>
+      <div class="reset-bar" id="resetBar">
+        <div class="reset-text">선택한 카드를 다시 뽑을까요?</div>
+        <button class="reset" id="resetFloatingBtn" type="button">다시 보기</button>
+      </div>
+
+      <div class="modal" id="resultModal" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="modal-backdrop" data-close="true"></div>
+        <div class="modal-panel">
+          <div class="modal-header">
+            <div class="result-label">답변</div>
+            <button class="modal-close" id="closeBtn" type="button" aria-label="닫기">
+              ✕
+            </button>
+          </div>
+          <div class="result-answer">
+            <div class="result-value" id="resultValue">-</div>
+            <div class="result-note" id="resultNote">카드를 선택하면 결과가 보여요.</div>
+          </div>
+          <div class="result-card" id="resultCard">
+            <div class="result-empty">선택된 카드가 없어요</div>
+          </div>
+          <button class="reset" id="resetBtn" type="button">다시 보기</button>
         </div>
-        <div class="result-card" id="resultCard">
-          <div class="result-empty">선택된 카드가 없어요</div>
-        </div>
-        <button class="reset" id="resetBtn" type="button">다시 보기</button>
-      </section>
+      </div>
     </div>
 
     <script src="app.js"></script>
