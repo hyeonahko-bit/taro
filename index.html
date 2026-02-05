@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>타로 Yes/No</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="app">
+      <header class="top">
+        <div class="badge">TARO</div>
+        <h1>오늘의 질문에 답을 드릴게요</h1>
+        <p class="sub">메이저 22장 중 1장을 선택하면 Yes/No로 알려드려요.</p>
+      </header>
+
+      <section class="guide">
+        <div class="guide-card">
+          <div class="guide-title">원 카드 스프레드</div>
+          <p class="guide-desc">
+            한 장을 뽑아 현재 상황이나 질문에 대한 간단한 답을 얻어요.
+          </p>
+          <div class="guide-tag">하루 운세 · 짧은 조언</div>
+        </div>
+        <div class="guide-card">
+          <div class="guide-title">해석 팁</div>
+          <p class="guide-desc">
+            상징, 색, 인물의 표정과 자세를 관찰하고 떠오르는 직관을 적어보세요.
+          </p>
+          <div class="guide-tag">상징 읽기 · 기본 의미 · 직관</div>
+        </div>
+      </section>
+
+      <section class="card-area">
+        <div class="hint">카드를 탭해 선택하세요</div>
+        <div class="card-grid" id="cardGrid" aria-live="polite"></div>
+      </section>
+
+      <section class="result" id="resultBox" aria-live="polite">
+        <div class="result-answer">
+          <div class="result-label">답변</div>
+          <div class="result-value" id="resultValue">-</div>
+          <div class="result-note" id="resultNote">카드를 선택하면 결과가 보여요.</div>
+        </div>
+        <div class="result-card" id="resultCard">
+          <div class="result-empty">선택된 카드가 없어요</div>
+        </div>
+        <button class="reset" id="resetBtn" type="button">다시 보기</button>
+      </section>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
