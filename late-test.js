@@ -39,12 +39,12 @@ const QUESTIONS = [
 
 const RESULT_POOL = [
   {
-    main: "정당화 실패",
+    main: "정당화 실패 🤡",
     sub: "벌칙 확정",
     tags: ["핑계 감다뒤", "완너벌 확정", "말만 하면 OUT"],
   },
   {
-    main: "정당화 실패",
+    main: "정당화 실패 🤡",
     sub: "벌칙 확정",
     tags: ["난리자베스", "지각 빌드업 금지", "주먹자로 주의"],
   },
@@ -54,27 +54,27 @@ const RESULT_POOL = [
     tags: ["좋🤙🏻다👍🏻는 인정", "입는순나 주의", "말바꿈 금지"],
   },
   {
-    main: "정당화 성공(희귀)",
+    main: "정당화 성공(희귀) ✨",
     sub: "이번만 패스. 다음은 없음.",
     tags: ["감다살", "증거 제출 완료", "센게는 참자"],
   },
 ];
 
 const PENALTIES = [
-  "커피 사오기",
-  "마라탕 사오기",
-  "치킨 쏘기",
-  "버블티 쏘기",
-  "밥 쏘기",
-  "존칭쓰기 3일",
-  "1일 심부름 + 칭찬 3회",
-  "닉네임 7일 변경",
-  "사과문 3줄 음성",
-  "애교 1분 음성 녹음",
-  "치킨 사기",
-  "버블티 사기",
-  "디저트 사기",
-  "디저트 추가 의무",
+  "☕ 커피 사오기",
+  "🌶️ 마라탕 사오기",
+  "🍗 치킨 쏘기",
+  "🧋 버블티 쏘기",
+  "🍚 밥 쏘기",
+  "🫡 존칭쓰기 3일",
+  "🛎️ 1일 심부름 + 칭찬 3회",
+  "🎮 닉네임 7일 변경",
+  "🎙️ 사과문 3줄 음성",
+  "🥺 애교 1분 음성 녹음",
+  "🍗 치킨 사기",
+  "🧋 버블티 사기",
+  "🍰 디저트 사기",
+  "🍮 디저트 추가 의무",
 ];
 
 const startBtn = document.getElementById("startBtn");
@@ -151,11 +151,16 @@ function renderResult() {
   const resultData = pickResult();
   const penalty = PENALTIES[Math.floor(Math.random() * PENALTIES.length)];
   resultMain.textContent = resultData.main;
-  resultSub.textContent =
-    resultData.main === "정당화 성공(희귀)" ? resultData.sub : penalty;
+  if (resultData.main.includes("실패")) {
+    resultSub.textContent = `🤝 말은 말이고, 벌칙은 확정: ${penalty}`;
+  } else if (resultData.main.includes("보류")) {
+    resultSub.textContent = `⏳ 보류니까 지각비 내고 기강 잡기: ${penalty}`;
+  } else {
+    resultSub.textContent = resultData.sub;
+  }
   const isFail = resultData.main.includes("실패");
   resultTags.innerHTML = resultData.tags
-    .map((tag) => `<span class="tag">#${tag}</span>`)
+    .map((tag) => `<span class="tag">#${tag} 😈</span>`)
     .join("");
   if (isFail) {
     resultCard?.classList.remove("is-fail");
