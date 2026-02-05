@@ -201,6 +201,7 @@ const TAROT_CARDS = [
 ];
 
 const cardGrid = document.getElementById("cardGrid");
+const questionInput = document.getElementById("questionInput");
 const resultModal = document.getElementById("resultModal");
 const resultValue = document.getElementById("resultValue");
 const resultNote = document.getElementById("resultNote");
@@ -241,52 +242,7 @@ const TONE_LINES = {
   warning: "변수를 점검해야 해요. 서두르기보다 확인이 필요해요.",
 };
 
-const DETAIL_INTERPRETATIONS = {
-  광대:
-    "새로운 출발의 기운이 강해요. 호기심과 모험심이 길을 열지만, 준비 없는 도전은 쉽게 흔들릴 수 있어요. 지금은 설렘을 유지하되, 위험 요소를 하나씩 점검하며 첫걸음을 안정적으로 떼는 것이 좋아요.",
-  마법사:
-    "능력과 자원을 연결하는 순간이에요. 이미 가진 재능이 충분하니, 집중과 실행력이 관건이에요. 외부 도움도 있겠지만 결국 성과는 스스로의 선택과 꾸준함에서 만들어져요.",
-  여사제:
-    "직관과 내면의 신호가 커지는 시기예요. 겉으로 드러난 정보보다 마음의 미묘한 느낌이 중요한 힌트가 될 수 있어요. 조용히 관찰하고, 감정의 결을 정리하면 더 분명한 답이 보여요.",
-  여왕:
-    "풍요와 성장이 흐르는 카드예요. 지금은 돌봄과 확장의 에너지가 필요해요. 내 생활의 만족도를 점검하고, 작은 기쁨을 키우는 방식이 좋은 결과로 이어져요.",
-  황제:
-    "질서와 책임이 강조되는 시기예요. 목표를 세우고 규칙을 정하면 안정적인 진전이 가능해요. 다만 지나친 통제는 부담이 될 수 있으니, 원칙과 유연함의 균형을 잡아보세요.",
-  교황:
-    "전통과 가르침이 핵심이에요. 믿을 만한 조언이나 검증된 방식이 도움이 되는 흐름이에요. 기본을 다시 점검하고, 신뢰할 수 있는 기준을 세우면 길이 더 또렷해져요.",
-  연인들:
-    "선택과 관계가 중요한 순간이에요. 마음이 끌리는 방향이 있더라도 책임과 현실을 함께 고려해야 해요. 가치관의 조화를 맞추면 더 건강한 결정으로 이어져요.",
-  전차:
-    "강한 추진력과 승부수가 나타나요. 의지를 모아 한 방향으로 밀어붙이면 성과가 나올 수 있어요. 다만 과속은 실수를 부를 수 있으니, 속도와 방향을 동시에 점검하세요.",
-  힘:
-    "온화하지만 강한 내면의 힘이 필요한 시기예요. 강압보다 설득과 인내가 더 큰 효과를 만들어줘요. 감정의 균형을 지키면 난관도 부드럽게 넘어갈 수 있어요.",
-  은둔자:
-    "고요한 탐색의 시간이 필요해 보여요. 외부의 소음보다 스스로의 기준을 세우는 것이 중요해요. 잠시 속도를 늦추고, 길을 비추는 작은 힌트를 찾는 것이 도움이 돼요.",
-  "운명의 수레바퀴":
-    "상승과 하강이 교차하는 변곡점이에요. 흐름이 빠르게 바뀌니, 고정된 계획보다 유연한 대응이 중요해요. 변화 속에서도 중심을 잡으면 기회가 열릴 수 있어요.",
-  정의:
-    "균형과 공정함이 핵심이에요. 감정에 치우치기보다 객관적인 기준을 세워야 해요. 지금은 서둘러 결론보다, 공정한 판단을 위한 정보를 더 모으는 게 좋아요.",
-  "매달린 사람":
-    "멈춤과 관점 전환이 요구돼요. 일시적인 정체가 답을 주는 과정일 수 있어요. 지금은 희생을 감수하고 시야를 바꿔보면 더 큰 의미가 드러나요.",
-  죽음:
-    "끝과 새로운 시작이 함께 오는 카드예요. 낡은 방식이나 집착을 내려놓아야 다음 단계로 넘어갈 수 있어요. 정리와 결단이 빠를수록 새로운 기회도 빨리 보여요.",
-  절제:
-    "조화와 균형이 필요한 흐름이에요. 과도함을 줄이고 서로 다른 요소를 잘 섞는 것이 핵심이에요. 천천히 조율하면 안정적인 결과로 이어져요.",
-  악마:
-    "집착과 유혹을 점검해야 해요. 자신을 묶는 것이 실제보다 마음의 습관일 수 있어요. 의존을 줄이고 자유를 선택하면 상황이 가벼워져요.",
-  탑:
-    "급격한 변화나 충격이 예고돼요. 무너짐은 불편하지만, 진실을 드러내는 계기이기도 해요. 지금은 안전장치를 점검하고, 변화 이후의 대안을 준비하세요.",
-  별:
-    "치유와 희망이 강해지는 카드예요. 혼란 뒤에 맑아지는 흐름이 보일 수 있어요. 작은 회복 신호를 놓치지 말고, 자신감을 천천히 회복해 보세요.",
-  달:
-    "불확실함과 직관이 공존하는 시기예요. 겉으로 보이는 것만 믿기보다, 숨은 감정과 무의식의 신호에 귀 기울여야 해요. 불안이 클수록 사실 확인을 늘리는 게 좋아요.",
-  태양:
-    "밝은 성취와 활력이 강조돼요. 상황이 낙관적으로 풀릴 가능성이 높아요. 다만 좋은 흐름 속에서도 기본을 잊지 말고, 감사와 겸손을 유지하세요.",
-  심판:
-    "결단과 각성이 요구되는 순간이에요. 과거의 선택을 정리하고 새로운 방향으로 나아가야 해요. 스스로에게 솔직해지면 명확한 길이 보일 수 있어요.",
-  세계:
-    "완성과 마무리의 에너지가 커요. 노력의 결실이 맺히고 다음 단계로 넘어갈 준비가 되어 있어요. 끝을 축하하되, 새로운 시작의 계획도 함께 세워보세요.",
-};
+const TONE_ORDER = ["positive", "neutral", "warning"];
 
 function shuffle(list) {
   const array = [...list];
@@ -331,14 +287,17 @@ function setActiveOption(attrName, value) {
 }
 
 function buildInterpretation(card) {
+  const question = questionInput.value.trim();
+  const questionLine = question ? `질문인 "${question}"에 대해` : "현재 상황에 대해";
+  const keywordText = card.keywords.join(", ");
+  const toneLine = TONE_LINES[selectedTone];
+
   if (selectedDepth === "detail") {
-    const detailText = DETAIL_INTERPRETATIONS[card.name];
-    const keywordText = card.keywords.join(", ");
-    return detailText
-      ? `${detailText} 핵심 키워드는 ${keywordText}예요.`
-      : `${card.summary} 지금은 ${keywordText}의 흐름이 강해요. 질문의 상황에서 가장 현실적인 선택지를 좁혀 보세요. 흐름의 장단을 함께 살피면 더 안정적인 선택이 가능해요.`;
+    return `${card.summary} ${questionLine} ${toneLine} 핵심 키워드는 ${keywordText}예요.`;
   }
-  return card.summary;
+  return question
+    ? `${card.summary} ${questionLine} 차분히 방향을 잡아보세요.`
+    : card.summary;
 }
 
 function pickAdvice(card) {
@@ -409,9 +368,8 @@ function handleSelect(index) {
   const answer = ANSWERS[Math.floor(Math.random() * ANSWERS.length)];
   currentAnswer = answer;
   selectedDepth = "simple";
-  selectedTone = "neutral";
+  selectedTone = TONE_ORDER[Math.floor(Math.random() * TONE_ORDER.length)];
   setActiveOption("data-depth", selectedDepth);
-  setActiveOption("data-tone", selectedTone);
   resultValue.textContent = currentAnswer;
   resultCard.innerHTML = cardFrontTemplate(currentCard);
   updateResult(currentCard);
@@ -429,6 +387,7 @@ function reset() {
   shareNote.textContent = "";
   currentCard = null;
   currentAnswer = null;
+  selectedTone = "neutral";
   resetBar.classList.remove("is-visible");
   buildCards();
   closeModal();
@@ -443,6 +402,12 @@ resultModal.addEventListener("click", (event) => {
   }
 });
 
+questionInput.addEventListener("input", () => {
+  if (currentCard) {
+    updateResult(currentCard);
+  }
+});
+
 resultOptions.addEventListener("click", (event) => {
   const button = event.target.closest(".option-chip");
   if (!button) return;
@@ -450,11 +415,6 @@ resultOptions.addEventListener("click", (event) => {
   if (button.dataset.depth) {
     selectedDepth = button.dataset.depth;
     setActiveOption("data-depth", selectedDepth);
-  }
-
-  if (button.dataset.tone) {
-    selectedTone = button.dataset.tone;
-    setActiveOption("data-tone", selectedTone);
   }
 
   updateResult(currentCard);
@@ -479,15 +439,17 @@ async function copyToClipboard(text) {
 
 function buildShareText() {
   if (!currentCard) return "";
+  const question = questionInput.value.trim();
   return [
     "[타로 Yes/No 결과]",
+    question ? `질문: ${question}` : null,
     `카드: ${currentCard.name} (${currentCard.en})`,
     `답변: ${currentAnswer}`,
     `해석 깊이: ${DEPTH_LABELS[selectedDepth]}`,
     `톤: ${TONE_LABELS[selectedTone]}`,
     `해석: ${interpretText.textContent}`,
     `한 줄 조언: ${resultAdvice.textContent}`,
-  ].join("\n");
+  ].filter(Boolean).join("\n");
 }
 
 shareBtn.addEventListener("click", async () => {
