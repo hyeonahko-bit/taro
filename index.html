@@ -36,6 +36,7 @@
         <div class="badge">TARO</div>
         <h1>오늘의 질문에 답을 드릴게요</h1>
         <p class="sub">고민을 깊이 생각하고 메이저 22장 중 1장을 선택하세요. 고민에 대한 답을 Yes/No로 알려드려요.</p>
+        <p class="sub" id="visitorCount" aria-live="polite">방문자 수 불러오는 중...</p>
       </header>
 
       <section class="guide">
@@ -81,11 +82,88 @@
           <div class="result-card" id="resultCard">
             <div class="result-empty">선택된 카드가 없어요</div>
           </div>
-          <button class="reset" id="resetBtn" type="button">다시 보기</button>
+          <div class="result-options" id="resultOptions">
+            <div class="option-group">
+              <div class="option-title">해석 깊이</div>
+              <div class="option-grid">
+                <button class="option-chip is-active" type="button" data-depth="simple">🌿 간단</button>
+                <button class="option-chip" type="button" data-depth="detail">📚 자세히</button>
+              </div>
+            </div>
+            <div class="option-group">
+              <div class="option-title">톤</div>
+              <div class="option-grid">
+                <button class="option-chip" type="button" data-tone="positive">✨ 긍정</button>
+                <button class="option-chip is-active" type="button" data-tone="neutral">🧭 중립</button>
+                <button class="option-chip" type="button" data-tone="warning">⚠️ 경고</button>
+              </div>
+            </div>
+          </div>
+          <div class="result-interpretation" id="resultInterpretation">
+            <div class="interpret-title">해석</div>
+            <p class="interpret-text" id="interpretText">카드를 선택하면 해석이 보여요.</p>
+            <div class="interpret-tags" id="interpretTags"></div>
+          </div>
+          <div class="result-advice" id="resultAdvice">한 줄 조언이 여기에 표시돼요.</div>
+          <div class="result-tools">
+            <button class="reset" id="resetBtn" type="button">다시 보기</button>
+            <button class="share" id="shareBtn" type="button">결과 공유</button>
+            <span class="share-note" id="shareNote" aria-live="polite"></span>
+          </div>
         </div>
       </div>
     </div>
 
     <script src="app.js"></script>
+    <script>
+      (function () {
+        var el = document.getElementById("visitorCount");
+        if (!el) return;
+
+        var namespace = "tarot-yes-no";
+        var key = "visitors";
+        var fallbackKey = namespace + "-" + key;
+
+        var endpoints = [
+          "https://api.countapi.xyz/hit/" + namespace + "/" + key,
+          "https://countapi.mileshilliard.com/api/v1/hit/" + fallbackKey
+        ];
+
+        function getValue(data) {
+          if (!data) return null;
+          if (typeof data.value === "number") return data.value;
+          if (typeof data.count === "number") return data.count;
+          if (typeof data.hits === "number") return data.hits;
+          return null;
+        }
+
+        function tryFetch(index) {
+          if (index >= endpoints.length) {
+            el.textContent = "방문자 수를 불러오지 못했어요.";
+            return;
+          }
+
+          fetch(endpoints[index])
+            .then(function (res) {
+              if (!res.ok) {
+                throw new Error("bad status");
+              }
+              return res.json();
+            })
+            .then(function (data) {
+              var value = getValue(data);
+              if (typeof value !== "number") {
+                throw new Error("invalid response");
+              }
+              el.textContent = "전체 방문자 수: " + value.toLocaleString();
+            })
+            .catch(function () {
+              tryFetch(index + 1);
+            });
+        }
+
+        tryFetch(0);
+      })();
+    </script>
   </body>
 </html>
